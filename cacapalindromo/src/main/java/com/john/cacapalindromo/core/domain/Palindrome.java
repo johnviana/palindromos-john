@@ -1,5 +1,8 @@
 package com.john.cacapalindromo.core.domain;
 
+/**
+ * @author john
+ */
 public class Palindrome {
 
     private String id;

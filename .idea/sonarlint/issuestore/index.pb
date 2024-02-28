@@ -9,3 +9,11 @@ Scacapalindromo/src/main/java/com/john/cacapalindromo/CacapalindromoApplication.
 Pcacapalindromo/src/main/java/com/john/cacapalindromo/core/domain/Palindrome.java,6\3\636c92db24d70d53e2c986b78b2bd47e5de6b89e
 Å
 Q.idea/sonarlint/securityhotspotstore/6/3/636c92db24d70d53e2c986b78b2bd47e5de6b89e,0\5\05037c91ead81218d5790a6474733a1e86ef1345
+ê
+`cacapalindromo/src/main/java/com/john/cacapalindromo/core/usecase/incluirPalindromeUserCase.java,0\7\07dec18055752dbcf7a6c91268e9545d52551dbc
+ê
+`cacapalindromo/src/main/java/com/john/cacapalindromo/core/usecase/IncluirPalindromeUserCase.java,6\2\6221bad06dd21c08469e12e1d1795e11737d5af4
+ë
+acacapalindromo/src/main/java/com/john/cacapalindromo/core/usecase/impl/IncluirPalindromeImpl.java,c\1\c1cc9e1e72e59d8e9371f0f3543c6a11f08940be
+ç
+]cacapalindromo/src/main/java/com/john/cacapalindromo/core/dataprovider/IncluirPalindrome.java,a\c\acc4bef3cf3a2e1d9a7fc7072fd904bf1a4ab313
