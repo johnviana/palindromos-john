@@ -3,7 +3,9 @@ package com.john.cacapalindromo.dataprovider.repository.entity.dtos;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
+/**
+ * @author john
+ */
 @Data
 @NoArgsConstructor
 @AllArgsConstructor
