@@ -1,77 +1,76 @@
 package com.john.cacapalindromo.core.usecase.impl;
 
+import com.john.cacapalindromo.core.dataprovider.PalindromoDataProvider;
 import com.john.cacapalindromo.core.domain.Palindromo;
 import com.john.cacapalindromo.core.usecase.BuscadorPalindromosUseCase;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
+
 /**
  * @author john
  */
 public class BuscadorPalindromosUseCaseImpl implements BuscadorPalindromosUseCase {
 
+    private final PalindromoDataProvider palindromoDataProvider;
+
+    public BuscadorPalindromosUseCaseImpl(PalindromoDataProvider palindromoDataProvider) {
+        this.palindromoDataProvider = palindromoDataProvider;
+    }
     @Override
     public List<Palindromo> buscarPalindromos(char[][] matriz) {
-        List<Palindromo> palindromosEncontrados = new ArrayList<>();
+        Set<String> palindromosEncontrados = new HashSet<>();
 
-        // Busca horizontal
+        // Verificar palíndromos na horizontal e vertical
         for (int i = 0; i < matriz.length; i++) {
-            StringBuilder linha = new StringBuilder();
             for (int j = 0; j < matriz[i].length; j++) {
-                linha.append(matriz[i][j]);
+                verificarPalindromosNaPosicao(matriz, i, j, palindromosEncontrados);
             }
-            verificarPalindromo(linha.toString(), palindromosEncontrados);
         }
 
-        // Busca vertical
-        for (int i = 0; i < matriz[0].length; i++) {
-            StringBuilder coluna = new StringBuilder();
-            for (int j = 0; j < matriz.length; j++) {
-                coluna.append(matriz[j][i]);
-            }
-            verificarPalindromo(coluna.toString(), palindromosEncontrados);
-        }
+        List<Palindromo> palindromosParaSalvar = criarListaDePalindromos(palindromosEncontrados);
+        palindromoDataProvider.salvarPalindromos(palindromosParaSalvar);
 
-        // Busca diagonais principais
-        for (int i = 0; i < matriz.length; i++) {
-            StringBuilder diagonal = new StringBuilder();
-            for (int j = 0; j < matriz.length - i; j++) {
-                diagonal.append(matriz[j][j + i]);
-            }
-            verificarPalindromo(diagonal.toString(), palindromosEncontrados);
-        }
-
-        for (int i = 1; i < matriz[0].length; i++) {
-            StringBuilder diagonal = new StringBuilder();
-            for (int j = 0; j < matriz[0].length - i; j++) {
-                diagonal.append(matriz[j + i][j]);
-            }
-            verificarPalindromo(diagonal.toString(), palindromosEncontrados);
-        }
-
-        // Busca diagonais secundárias
-        for (int i = 0; i < matriz.length; i++) {
-            StringBuilder diagonal = new StringBuilder();
-            for (int j = 0; j <= i; j++) {
-                diagonal.append(matriz[j][i - j]);
-            }
-            verificarPalindromo(diagonal.toString(), palindromosEncontrados);
-        }
-
-        for (int i = 1; i < matriz.length; i++) {
-            StringBuilder diagonal = new StringBuilder();
-            for (int j = matriz.length - 1; j >= i; j--) {
-                diagonal.append(matriz[j][matriz.length - j + i - 1]);
-            }
-            verificarPalindromo(diagonal.toString(), palindromosEncontrados);
-        }
-
-        return palindromosEncontrados;
+        return criarListaDePalindromos(palindromosEncontrados);
     }
 
-    private void verificarPalindromo(String palavra, List<Palindromo> palindromosEncontrados) {
-        if (ehPalindromo(palavra)) {
-            palindromosEncontrados.add(new Palindromo(palavra));
+    private void verificarPalindromosNaPosicao(char[][] matriz, int linha, int coluna, Set<String> palindromosEncontrados) {
+        int tamanho = matriz.length;
+        StringBuilder palavra = new StringBuilder();
+
+        // Horizontal (esquerda para direita)
+        for (int i = coluna; i < tamanho; i++) {
+            palavra.append(matriz[linha][i]);
+            verificarEAdicionarPalindromo(palavra.toString(), palindromosEncontrados);
+        }
+
+        // Vertical (cima para baixo)
+        palavra.setLength(0); // Limpar StringBuilder
+        for (int i = linha; i < tamanho; i++) {
+            palavra.append(matriz[i][coluna]);
+            verificarEAdicionarPalindromo(palavra.toString(), palindromosEncontrados);
+        }
+
+        // Diagonal principal (superior esquerda para inferior direita)
+        palavra.setLength(0); // Limpar StringBuilder
+        for (int i = 0; linha + i < tamanho && coluna + i < tamanho; i++) {
+            palavra.append(matriz[linha + i][coluna + i]);
+            verificarEAdicionarPalindromo(palavra.toString(), palindromosEncontrados);
+        }
+
+        // Diagonal secundária (superior direita para inferior esquerda)
+        palavra.setLength(0); // Limpar StringBuilder
+        for (int i = 0; linha + i < tamanho && coluna - i >= 0; i++) {
+            palavra.append(matriz[linha + i][coluna - i]);
+            verificarEAdicionarPalindromo(palavra.toString(), palindromosEncontrados);
+        }
+    }
+
+    private void verificarEAdicionarPalindromo(String palavra, Set<String> palindromosEncontrados) {
+        if (ehPalindromo(palavra) && palavra.length() > 1) {
+            palindromosEncontrados.add(palavra);
         }
     }
 
@@ -79,12 +78,18 @@ public class BuscadorPalindromosUseCaseImpl implements BuscadorPalindromosUseCas
         int inicio = 0;
         int fim = palavra.length() - 1;
         while (inicio < fim) {
-            if (palavra.charAt(inicio) != palavra.charAt(fim)) {
+            if (palavra.charAt(inicio++) != palavra.charAt(fim--)) {
                 return false;
             }
-            inicio++;
-            fim--;
         }
         return true;
+    }
+
+    private List<Palindromo> criarListaDePalindromos(Set<String> palindromosEncontrados) {
+        List<Palindromo> listaDePalindromos = new ArrayList<>();
+        for (String palavra : palindromosEncontrados) {
+            listaDePalindromos.add(new Palindromo(palavra));
+        }
+        return listaDePalindromos;
     }
 }

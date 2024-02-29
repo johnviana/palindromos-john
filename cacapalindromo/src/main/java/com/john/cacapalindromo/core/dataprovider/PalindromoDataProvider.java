@@ -7,4 +7,5 @@ import java.util.List;
 public interface PalindromoDataProvider {
 
     void salvarPalindromos(List<Palindromo> palindromos);
+
 }
