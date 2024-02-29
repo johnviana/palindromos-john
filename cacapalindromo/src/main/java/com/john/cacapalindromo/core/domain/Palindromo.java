@@ -5,19 +5,23 @@ package com.john.cacapalindromo.core.domain;
  */
 public class Palindromo {
 
-    private Long id;
+    private Long idPalindromo;
     private String palavra;
 
-    public Palindromo(String palavra) {
+    public Palindromo() {
+    }
+
+    public Palindromo(Long idPalindromo, String palavra) {
+        this.idPalindromo = idPalindromo;
         this.palavra = palavra;
     }
 
-    public Long getId() {
-        return id;
+    public Long getIdPalindromo() {
+        return idPalindromo;
     }
 
-    public void setId(Long id) {
-        this.id = id;
+    public void setIdPalindromo(Long idPalindromo) {
+        this.idPalindromo = idPalindromo;
     }
 
     public String getPalavra() {
@@ -27,5 +31,12 @@ public class Palindromo {
     public void setPalavra(String palavra) {
         this.palavra = palavra;
     }
-}
 
+    @Override
+    public String toString() {
+        return "Palindromo{" +
+                "idPalindromo=" + idPalindromo +
+                ", palavra='" + palavra + '\'' +
+                '}';
+    }
+}
