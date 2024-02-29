@@ -1,31 +1,49 @@
 package com.john.cacapalindromo.dataprovider;
 
+import com.john.cacapalindromo.core.exception.PalindromeServiceException;
 import com.john.cacapalindromo.core.usecase.domain.Palindromo;
 import com.john.cacapalindromo.dataprovider.repository.PalindromeRepository;
+import com.john.cacapalindromo.dataprovider.repository.entity.PalindromeEntity;
 import com.john.cacapalindromo.entrypoint.mapper.IPalindromeMapper;
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.RequiredArgsConstructor;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * @author john
  */
 @Service
+@RequiredArgsConstructor
 public class PalindromeService {
+    private static final Logger logger = LoggerFactory.getLogger(PalindromeService.class);
 
-    @Autowired
-    private PalindromeRepository palindromeRepository;
-
-    @Autowired
-    private IPalindromeMapper palindromeMapper;
+    private final PalindromeRepository palindromeRepository;
+    private final IPalindromeMapper palindromeMapper;
 
     public Palindromo save(Palindromo palindrome) {
-        return palindromeMapper.toDomain(palindromeRepository.save(palindromeMapper.toEntity(palindrome)));
+        try {
+            PalindromeEntity entity = palindromeMapper.toEntity(palindrome);
+            PalindromeEntity savedEntity = palindromeRepository.save(entity);
+            return palindromeMapper.toDomain(savedEntity);
+        } catch (Exception e) {
+            logger.error("Erro ao salvar o palíndromo", e);
+            throw new PalindromeServiceException("Erro ao salvar o palíndromo", e);
+        }
     }
 
     public List<Palindromo> findAll() {
-        return palindromeRepository.findAll().stream().map(pEntity -> palindromeMapper.toDomain(pEntity)).toList();
+        try {
+            List<PalindromeEntity> entities = palindromeRepository.findAll();
+            return entities.stream()
+                    .map(palindromeMapper::toDomain)
+                    .collect(Collectors.toList());
+        } catch (Exception e) {
+            logger.error("Erro ao buscar os palíndromos", e);
+            throw new PalindromeServiceException("Erro ao buscar os palíndromos", e);
+        }
     }
-
 }
