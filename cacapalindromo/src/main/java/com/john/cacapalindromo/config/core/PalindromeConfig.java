@@ -1,4 +1,4 @@
-package com.john.cacapalindromo.config;
+package com.john.cacapalindromo.config.core;
 
 import com.john.cacapalindromo.core.usecase.impl.PalindromeUseCaseImpl;
 import com.john.cacapalindromo.dataprovider.PalindromeService;

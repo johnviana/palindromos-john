@@ -1,4 +1,4 @@
-package com.john.cacapalindromo.core.domain;
+package com.john.cacapalindromo.core.usecase.domain;
 
 /**
  * @author john

@@ -1,6 +1,6 @@
 package com.john.cacapalindromo.core.usecase;
 
-import com.john.cacapalindromo.core.domain.Palindromo;
+import com.john.cacapalindromo.core.usecase.domain.Palindromo;
 
 import java.util.List;
 /**
