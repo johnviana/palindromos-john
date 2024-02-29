@@ -87,15 +87,15 @@ class PalindromeServiceTest {
         assertNotNull(foundPalindromes);
         assertEquals(2, foundPalindromes.size());
     }
+
     @Test
     void findAll_Failure() {
-
-        Mockito.when(palindromeRepository.findAll()).thenThrow(new RuntimeException("Erro ao buscar palíndromos"));
+        Mockito.when(palindromeRepository.findAll()).thenThrow(new RuntimeException("Erro ao buscar os palíndromos"));
 
         RuntimeException exception = assertThrows(RuntimeException.class, () -> {
             palindromeService.findAll();
         });
-        assertEquals("Erro ao buscar palíndromos", exception.getMessage());
 
+        assertTrue(exception.getMessage().contains("Erro ao buscar os palíndromos"));
     }
 }

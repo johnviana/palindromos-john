@@ -5,7 +5,6 @@ import com.john.cacapalindromo.core.usecase.domain.Palindromo;
 import com.john.cacapalindromo.dataprovider.repository.PalindromeRepository;
 import com.john.cacapalindromo.dataprovider.repository.entity.PalindromeEntity;
 import com.john.cacapalindromo.entrypoint.mapper.IPalindromeMapper;
-import lombok.RequiredArgsConstructor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
@@ -17,12 +16,16 @@ import java.util.stream.Collectors;
  * @author john
  */
 @Service
-@RequiredArgsConstructor
 public class PalindromeService {
     private static final Logger logger = LoggerFactory.getLogger(PalindromeService.class);
 
     private final PalindromeRepository palindromeRepository;
     private final IPalindromeMapper palindromeMapper;
+
+    public PalindromeService(PalindromeRepository palindromeRepository, IPalindromeMapper palindromeMapper) {
+        this.palindromeRepository = palindromeRepository;
+        this.palindromeMapper = palindromeMapper;
+    }
 
     public Palindromo save(Palindromo palindrome) {
         try {
