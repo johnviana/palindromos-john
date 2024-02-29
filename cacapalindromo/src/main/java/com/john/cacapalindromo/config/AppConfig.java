@@ -1,7 +1,6 @@
 package com.john.cacapalindromo.config;
 
 import com.john.cacapalindromo.core.dataprovider.PalindromoDataProvider;
-import com.john.cacapalindromo.core.usecase.BuscadorPalindromosUseCase;
 import com.john.cacapalindromo.core.usecase.impl.BuscadorPalindromosUseCaseImpl;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

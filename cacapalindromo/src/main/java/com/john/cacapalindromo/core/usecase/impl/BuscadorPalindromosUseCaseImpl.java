@@ -2,7 +2,6 @@ package com.john.cacapalindromo.core.usecase.impl;
 
 import com.john.cacapalindromo.core.dataprovider.PalindromoDataProvider;
 import com.john.cacapalindromo.core.domain.Palindromo;
-import com.john.cacapalindromo.core.usecase.BuscadorPalindromosUseCase;
 
 import java.util.ArrayList;
 import java.util.HashSet;
