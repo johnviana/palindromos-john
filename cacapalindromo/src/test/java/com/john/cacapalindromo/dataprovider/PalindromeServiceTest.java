@@ -11,8 +11,13 @@ import org.mockito.Mock;
 import org.mockito.Mockito;
 import org.mockito.MockitoAnnotations;
 
-import static org.junit.jupiter.api.Assertions.*;
+import java.util.Arrays;
+import java.util.List;
 
+import static org.junit.jupiter.api.Assertions.*;
+/**
+ * @author john
+ */
 class PalindromeServiceTest {
 
     @Mock
@@ -65,8 +70,23 @@ class PalindromeServiceTest {
 
     @Test
     void findAll_Success() {
+        // Given
+        PalindromeEntity entity1 = new PalindromeEntity();
+        PalindromeEntity entity2 = new PalindromeEntity();
+        List<PalindromeEntity> entityList = Arrays.asList(entity1, entity2);
+        Mockito.when(palindromeRepository.findAll()).thenReturn(entityList);
 
-}
+        Palindromo domain1 = new Palindromo();
+        Palindromo domain2 = new Palindromo();
+        List<Palindromo> domainList = Arrays.asList(domain1, domain2);
+        Mockito.when(palindromeMapper.toDomain(entity1)).thenReturn(domain1);
+        Mockito.when(palindromeMapper.toDomain(entity2)).thenReturn(domain2);
+
+        List<Palindromo> foundPalindromes = palindromeService.findAll();
+
+        assertNotNull(foundPalindromes);
+        assertEquals(2, foundPalindromes.size());
+    }
     @Test
     void findAll_Failure() {
 
